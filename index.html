@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="CodeBridge AI — A ponte entre IA e engenharia de software de qualidade. Transformamos código gerado por IA em software real, estruturado e escalável."/>
+  <meta name="keywords" content="CodeBridge AI, revisão de código, IA, engenharia de software, mentoria técnica, arquitetura"/>
+  <meta property="og:title" content="CodeBridge AI — Da IA ao software de verdade."/>
+  <meta property="og:description" content="A ponte entre IA e engenharia de software de qualidade."/>
+  <meta property="og:type" content="website"/>
+  <title>CodeBridge AI — Da IA ao software de verdade.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/css/variables.css"/>
+  <link rel="stylesheet" href="assets/css/style.css"/>
+  <link rel="stylesheet" href="assets/css/components.css"/>
+  <link rel="stylesheet" href="assets/css/responsive.css"/>
+  <style>
+    /* ── HOME-SPECIFIC STYLES ── */
+    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: var(--nav-h); position: relative; overflow: hidden; }
+    .hero-glow-1 { width: 600px; height: 600px; top: -100px; right: -100px; opacity: 0.7; }
+    .hero-glow-2 { width: 400px; height: 400px; bottom: 100px; left: 10%; opacity: 0.4; }
+    .hero-inner { display: flex; align-items: center; justify-content: space-between; gap: 4rem; padding: 4rem 0 5rem; }
+    .hero-content { flex: 1; max-width: 600px; }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);
+      letter-spacing: 0.14em; margin-bottom: 2rem;
+    }
+    .hero-eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 10px var(--teal); animation: pulse 2.5s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
+    .hero h1 { margin-bottom: 1.2rem; }
+    .hero h1 em { font-style: normal; color: var(--teal); }
+    .hero-sub { font-size: 1.15rem; color: var(--text-secondary); max-width: 480px; margin-bottom: 2.5rem; }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+    .hero-tags { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; margin-top: 3rem; }
+    .hero-stat { background: var(--bg-1); padding: 1.25rem 1rem; text-align: center; }
+    .hero-stat-num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--teal); display: block; line-height: 1; margin-bottom: 0.3rem; }
+    .hero-stat-label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.1em; }
+    /* Hero visual (bridge mark illustration) */
+    .hero-visual { flex-shrink: 0; width: 360px; height: 360px; position: relative; }
+    .bridge-illustration { width: 100%; height: 100%; }
+
+    /* Problem section */
+    .problem-section { padding: var(--sp-xl) 0; background: var(--bg-1); }
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+
+    /* Insight section */
+    .insight-section { padding: var(--sp-xl) 0; }
+    .insight-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .insight-bars { display: flex; flex-direction: column; gap: 1.2rem; }
+    .insight-bar-header { display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); }
+    .insight-bar-pct { color: var(--teal); }
+
+    /* Services section */
+    .services-section { padding: var(--sp-xl) 0; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+
+    /* How it works */
+    .how-section { padding: var(--sp-xl) 0; background: var(--bg-1); }
+    .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; margin-top: 3rem; }
+    .step-col { background: var(--bg-1); padding: 2.5rem 1.75rem; position: relative; }
+    .step-col::after { content: attr(data-arrow); position: absolute; right: -0.7rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.2rem; z-index: 2; }
+    .step-col:last-child::after { display: none; }
+
+    /* Market section */
+    .market-section { padding: var(--sp-xl) 0; }
+    .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .tsm-bars { display: flex; flex-direction: column; gap: 1rem; }
+    .tsm-row { display: flex; gap: 1rem; align-items: center; }
+    .tsm-label { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted); width: 2.5rem; }
+    .tsm-bar { height: 40px; border-radius: var(--r-sm); display: flex; align-items: center; padding: 0 0.9rem; transition: width 1.2s var(--ease-out); }
+    .tsm-bar span { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; color: var(--white); }
+    .tsm-desc { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.3rem; margin-left: 3.5rem; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; }
+    .metric-item { background: var(--bg-1); padding: 2rem 1.25rem; text-align: center; }
+
+    /* Team section */
+    .team-section { padding: var(--sp-xl) 0; background: var(--bg-1); }
+    .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+
+    /* Roadmap */
+    .roadmap-section { padding: var(--sp-xl) 0; }
+
+    /* Final CTA */
+    .final-cta { padding: var(--sp-xl) 0 var(--sp-2xl); }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-mark">
+        <svg width="22" height="22" viewBox="0 0 40 40" fill="none">
+          <path d="M4 28 Q20 8 36 28" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <line x1="4" y1="28" x2="4" y2="35" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          <line x1="36" y1="28" x2="36" y2="35" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="20" cy="9" r="3.5" fill="#2EC4B6"/>
+        </svg>
+      </div>
+      <div>
+        <div class="nav-logo-text">CodeBridge AI</div>
+        <div class="nav-logo-sub">/brand-book</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Início</a>
+      <a href="about.html">Sobre</a>
+      <a href="services.html">Serviços</a>
+      <a href="founders.html">Fundadores</a>
+      <a href="brand-center.html">Brand Center</a>
+      <a href="idea-hub.html">Idea Hub</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contato</a>
+    </div>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-ghost btn-sm">Fale conosco</a>
+      <a href="services.html" class="btn btn-primary btn-sm btn-arrow">Começar</a>
+    </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="nav-mobile" id="nav-mobile">
+  <a href="index.html">Início</a>
+  <a href="about.html">Sobre</a>
+  <a href="services.html">Serviços</a>
+  <a href="founders.html">Fundadores</a>
+  <a href="brand-center.html">Brand Center</a>
+  <a href="idea-hub.html">Idea Hub</a>
+  <a href="blog.html">Blog</a>
+  <a href="community.html">Comunidade</a>
+  <a href="contact.html">Contato</a>
+  <div class="nav-mobile-cta">
+    <a href="services.html" class="btn btn-primary" style="width:100%;justify-content:center">Começar agora →</a>
+  </div>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero bg-grid">
+  <div class="glow-azure hero-glow-1"></div>
+  <div class="glow-teal hero-glow-2"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <div class="dot"></div>
+          Novo · CodeBridge AI v1.0
+        </div>
+        <h1>Da IA ao software<br/><em>de verdade.</em></h1>
+        <p class="hero-sub">A ponte entre inteligência artificial e engenharia de software de qualidade. Transformamos código gerado por IA em soluções sólidas, escaláveis e profissionais.</p>
+        <div class="hero-cta">
+          <a href="services.html" class="btn btn-primary btn-lg btn-arrow">Ver serviços</a>
+          <a href="about.html" class="btn btn-secondary btn-lg">Conhecer a empresa</a>
+        </div>
+        <div class="hero-tags">
+          <span class="tag teal">Revisão de código</span>
+          <span class="tag">Arquitetura</span>
+          <span class="tag">Mentoria técnica</span>
+          <span class="tag">IA responsável</span>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-num" data-count="27" data-suffix="M+">27M+</span>
+            <span class="hero-stat-label">Devs usando IA</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-num" data-count="78" data-suffix="%">78%</span>
+            <span class="hero-stat-label">Adotaram em 2024</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-num" data-count="0" data-suffix=" treinados">0%</span>
+            <span class="hero-stat-label">Preparados para eng.</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <svg class="bridge-illustration" viewBox="0 0 360 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="hglow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#2563A8" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#2563A8" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="harch" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#1A3557"/>
+              <stop offset="50%" stop-color="#2563A8"/>
+              <stop offset="100%" stop-color="#0F766E"/>
+            </linearGradient>
+          </defs>
+          <!-- Background glow -->
+          <circle cx="180" cy="180" r="160" fill="url(#hglow)"/>
+          <!-- Orbit rings -->
+          <circle cx="180" cy="180" r="140" stroke="#1A3557" stroke-width="0.5" stroke-dasharray="4 8" opacity="0.4"/>
+          <circle cx="180" cy="180" r="110" stroke="#1A3557" stroke-width="0.5" stroke-dasharray="2 10" opacity="0.25"/>
+          <!-- Bridge arch -->
+          <path d="M50 218 Q180 70 310 218" stroke="#1A3557" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+          <path d="M50 218 Q180 70 310 218" stroke="url(#harch)" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.8"/>
+          <!-- Pillars -->
+          <line x1="50"  y1="218" x2="50"  y2="260" stroke="#1A3557" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="310" y1="218" x2="310" y2="260" stroke="#1A3557" stroke-width="4.5" stroke-linecap="round"/>
+          <!-- Base -->
+          <line x1="32"  y1="260" x2="328" y2="260" stroke="#1A3557" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+          <!-- Left brace { -->
+          <path d="M28 238 L20 248 L20 268 L28 278" fill="none" stroke="#2563A8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+          <!-- Right brace } -->
+          <path d="M332 238 L340 248 L340 268 L332 278" fill="none" stroke="#2563A8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+          <!-- Cable lines from apex -->
+          <line x1="180" y1="78" x2="105" y2="200" stroke="#2563A8" stroke-width="1" stroke-dasharray="4 6" opacity="0.3"/>
+          <line x1="180" y1="78" x2="180" y2="220" stroke="#2563A8" stroke-width="1" stroke-dasharray="4 6" opacity="0.3"/>
+          <line x1="180" y1="78" x2="255" y2="200" stroke="#2563A8" stroke-width="1" stroke-dasharray="4 6" opacity="0.3"/>
+          <!-- Apex dot glow -->
+          <circle cx="180" cy="72" r="22" fill="#0F766E" opacity="0.18"/>
+          <circle cx="180" cy="72" r="12" fill="#0F766E" opacity="0.35"/>
+          <!-- Apex dot -->
+          <circle cx="180" cy="72" r="7" fill="#2EC4B6"/>
+          <circle cx="180" cy="72" r="7" fill="#2EC4B6" opacity="0.6" style="filter: blur(3px);"/>
+          <!-- Small nodes on arch -->
+          <circle cx="105" cy="155" r="5" fill="#2563A8" opacity="0.7"/>
+          <circle cx="255" cy="155" r="5" fill="#2563A8" opacity="0.7"/>
+          <circle cx="180" cy="115" r="4" fill="#0F766E" opacity="0.6"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROBLEM ═══ -->
+<section class="problem-section" id="problema">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">01 — O Problema</div>
+      <h2>A IA gera código.<br/>Mas quem garante a qualidade?</h2>
+      <p>Ferramentas como ChatGPT, GitHub Copilot e Cursor mudaram o desenvolvimento. Mas geraram um novo problema invisível.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="card-num">01</div>
+        <h3>⚡ Velocidade sem estrutura</h3>
+        <p>Código gerado em segundos, mas sem arquitetura, padrões ou escalabilidade. O que funciona hoje, quebra amanhã.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="card-num">02</div>
+        <h3>🔴 Sistemas frágeis</h3>
+        <p>Dívida técnica invisível acumula. O sistema funciona localmente, mas quebra em produção, sob carga ou com o time crescendo.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="card-num">03</div>
+        <h3>📉 Devs sem referência técnica</h3>
+        <p>Milhões de desenvolvedores iniciantes, freelancers e indie hackers usam IA sem saber transformar o output em software real.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INSIGHT ═══ -->
+<section class="insight-section" id="insight">
+  <div class="container">
+    <div class="insight-inner">
+      <div class="reveal">
+        <div class="section-tag">02 — Insight-chave</div>
+        <h2>A IA não vai substituir devs. <span class="text-gradient">Mas devs que usam IA vão superar os que não usam.</span></h2>
+        <p class="lead" style="margin: 1.25rem 0 1.5rem;">O problema real não é a IA. É que pouquíssimos desenvolvedores sabem o que fazer com o código que ela gera.</p>
+        <blockquote class="quote-card">
+          <p class="quote-text">"A melhor forma de aprender e ensinar é compartilhando conhecimento."</p>
+          <cite class="quote-author">— Filosofia CodeBridge AI</cite>
+        </blockquote>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <p style="font-family:var(--font-mono);font-size:0.78rem;color:var(--text-muted);letter-spacing:0.14em;margin-bottom:1.5rem">CRESCIMENTO DO USO DE IA EM DEV</p>
+        <div class="insight-bars">
+          <div class="insight-bar-item">
+            <div class="insight-bar-header"><span>2022</span><span class="insight-bar-pct">12%</span></div>
+            <div class="progress-bar"><div class="progress-fill" data-width="12%" style="width:0;background:#334155"></div></div>
+          </div>
+          <div class="insight-bar-item">
+            <div class="insight-bar-header"><span>2023</span><span class="insight-bar-pct">38%</span></div>
+            <div class="progress-bar"><div class="progress-fill" data-width="38%" style="width:0;background:#2563A8"></div></div>
+          </div>
+          <div class="insight-bar-item">
+            <div class="insight-bar-header"><span>2024</span><span class="insight-bar-pct">62%</span></div>
+            <div class="progress-bar"><div class="progress-fill" data-width="62%" style="width:0;background:#3B82F6"></div></div>
+          </div>
+          <div class="insight-bar-item">
+            <div class="insight-bar-header"><span>2025</span><span class="insight-bar-pct">78%</span></div>
+            <div class="progress-bar"><div class="progress-fill" data-width="78%" style="width:0"></div></div>
+          </div>
+        </div>
+        <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem">Fonte: Stack Overflow Developer Survey 2024</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section class="services-section" id="servicos" style="background:var(--bg-1)">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">03 — Solução</div>
+      <h2>Transformamos código gerado por IA em software profissional.</h2>
+      <p>Seis serviços integrados para levar seu produto do prompt ao production com qualidade real.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="card-icon" style="background:rgba(46,196,182,0.12);border:1px solid var(--border-teal)">🔍</div>
+        <div class="card-num">01</div>
+        <h3>Revisão de código com IA</h3>
+        <p>Análise técnica completa do código gerado: arquitetura, segurança, performance, padrões e legibilidade. Relatório com prioridades.</p>
+        <a href="services.html" class="btn btn-ghost btn-sm" style="margin-top:1.25rem">Saiba mais →</a>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="card-icon" style="background:rgba(37,99,168,0.15);border:1px solid rgba(59,130,246,0.3)">🏗</div>
+        <div class="card-num">02</div>
+        <h3>Arquitetura e padronização</h3>
+        <p>Refatoração, organização de estrutura de pastas, design patterns e melhores práticas para o contexto específico do projeto.</p>
+        <a href="services.html" class="btn btn-ghost btn-sm" style="margin-top:1.25rem">Saiba mais →</a>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="card-icon" style="background:rgba(46,196,182,0.12);border:1px solid var(--border-teal)">🧑‍🏫</div>
+        <div class="card-num">03</div>
+        <h3>Mentoria técnica</h3>
+        <p>Sessões individuais ou em grupo. O desenvolvedor aprende engenharia enquanto o código evolui. Conhecimento compartilhado.</p>
+        <a href="services.html" class="btn btn-ghost btn-sm" style="margin-top:1.25rem">Saiba mais →</a>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="card-icon" style="background:rgba(37,99,168,0.15);border:1px solid rgba(59,130,246,0.3)">⚡</div>
+        <div class="card-num">04</div>
+        <h3>Debug e otimização</h3>
+        <p>Identificação e resolução de bugs complexos, gargalos de performance e problemas de escalabilidade em sistemas com IA.</p>
+        <a href="services.html" class="btn btn-ghost btn-sm" style="margin-top:1.25rem">Saiba mais →</a>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="card-icon" style="background:rgba(46,196,182,0.12);border:1px solid var(--border-teal)">📦</div>
+        <div class="card-num">05</div>
+        <h3>Templates reutilizáveis</h3>
+        <p>Estruturas prontas e documentadas para projetos comuns: APIs REST, apps Next.js, sistemas de auth, dashboards e mais.</p>
+        <a href="services.html" class="btn btn-ghost btn-sm" style="margin-top:1.25rem">Saiba mais →</a>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="card-icon" style="background:rgba(37,99,168,0.15);border:1px solid rgba(59,130,246,0.3)">🎓</div>
+        <div class="card-num">06</div>
+        <h3>Educação prática colaborativa</h3>
+        <p>Conteúdo técnico, workshops e comunidade de aprendizado. Aprenda enquanto constrói projetos reais com feedback especializado.</p>
+        <a href="services.html" class="btn btn-ghost btn-sm" style="margin-top:1.25rem">Saiba mais →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="how-section" id="como-funciona">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">04 — Como funciona</div>
+      <h2>Do prompt ao production em 4 etapas.</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-col reveal reveal-delay-1" data-arrow="→">
+        <div class="step-num">01</div>
+        <h4 style="margin:0.75rem 0 0.5rem;color:var(--teal)">Diagnóstico</h4>
+        <p style="font-size:0.9rem">Análise do código e identificação de problemas de arquitetura, segurança, performance e legibilidade.</p>
+      </div>
+      <div class="step-col reveal reveal-delay-2" data-arrow="→">
+        <div class="step-num">02</div>
+        <h4 style="margin:0.75rem 0 0.5rem;color:var(--azure-lt)">Estruturação</h4>
+        <p style="font-size:0.9rem">Refatoração e organização com padrões de design e melhores práticas para o contexto do projeto.</p>
+      </div>
+      <div class="step-col reveal reveal-delay-3" data-arrow="→">
+        <div class="step-num">03</div>
+        <h4 style="margin:0.75rem 0 0.5rem;color:var(--teal)">Mentoria</h4>
+        <p style="font-size:0.9rem">Sessões técnicas onde o dev aprende enquanto o código evolui. Conhecimento compartilhado, não dependência.</p>
+      </div>
+      <div class="step-col reveal reveal-delay-4">
+        <div class="step-num">04</div>
+        <h4 style="margin:0.75rem 0 0.5rem;color:var(--azure-lt)">Entrega</h4>
+        <p style="font-size:0.9rem">Código documentado, testável e escalável. Templates reutilizáveis. Base sólida para crescer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MARKET ═══ -->
+<section class="market-section" id="mercado">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">05 — Mercado</div>
+      <h2>Um mercado de $1 trilhão em formação.</h2>
+    </div>
+    <div class="metrics-row reveal">
+      <div class="metric-item">
+        <div class="metric-num" data-count="27" data-suffix="M+">27M+</div>
+        <div class="metric-label">Devs usando IA ativamente</div>
+        <div class="metric-sub">no mundo</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-num" data-count="794" data-prefix="$" data-suffix="B">$794B</div>
+        <div class="metric-label">Mercado global de IA</div>
+        <div class="metric-sub">até 2030 · Grand View Research</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-num" data-count="78" data-suffix="%">78%</div>
+        <div class="metric-label">dos devs usam IA</div>
+        <div class="metric-sub">Stack Overflow 2024</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-num" data-count="3" data-suffix="x">3x</div>
+        <div class="metric-label">mais rápido com IA</div>
+        <div class="metric-sub">sem garantia de qualidade</div>
+      </div>
+    </div>
+
+    <div class="market-grid" style="margin-top:3.5rem">
+      <div class="reveal">
+        <h3 style="margin-bottom:1.5rem">TAM · SAM · SOM</h3>
+        <div class="tsm-bars">
+          <div class="tsm-item">
+            <div class="tsm-row">
+              <span class="tsm-label">TAM</span>
+              <div class="tsm-bar" style="width:100%;background:linear-gradient(90deg,#1A3557,#2563A8)"><span>$794B</span></div>
+            </div>
+            <div class="tsm-desc">Mercado global de IA & Edtech</div>
+          </div>
+          <div class="tsm-item">
+            <div class="tsm-row">
+              <span class="tsm-label">SAM</span>
+              <div class="tsm-bar" style="width:70%;background:linear-gradient(90deg,#2563A8,#3B82F6)"><span>$28B</span></div>
+            </div>
+            <div class="tsm-desc">Dev Education & Code Review</div>
+          </div>
+          <div class="tsm-item">
+            <div class="tsm-row">
+              <span class="tsm-label">SOM</span>
+              <div class="tsm-bar" style="width:40%;background:var(--grad-teal)"><span>$420M</span></div>
+            </div>
+            <div class="tsm-desc">Devs BR + LATAM usando IA</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <h3 style="margin-bottom:1.5rem">O contexto do mercado</h3>
+        <ul style="display:flex;flex-direction:column;gap:0.9rem">
+          <li style="display:flex;gap:0.75rem;font-size:0.95rem;color:var(--text-secondary)"><span style="color:var(--teal);flex-shrink:0">→</span>O uso de IA em dev cresceu 300% nos últimos 2 anos.</li>
+          <li style="display:flex;gap:0.75rem;font-size:0.95rem;color:var(--text-secondary)"><span style="color:var(--teal);flex-shrink:0">→</span>A maioria dos bootcamps não ensina engenharia com IA.</li>
+          <li style="display:flex;gap:0.75rem;font-size:0.95rem;color:var(--text-secondary)"><span style="color:var(--teal);flex-shrink:0">→</span>Empresas contratam devs com IA mas exigem qualidade sênior.</li>
+          <li style="display:flex;gap:0.75rem;font-size:0.95rem;color:var(--text-secondary)"><span style="color:var(--teal);flex-shrink:0">→</span>Nenhum player global faz a ponte entre IA generativa e engenharia de qualidade com foco educacional.</li>
+        </ul>
+        <div style="margin-top:2rem">
+          <a href="about.html" class="btn btn-secondary btn-arrow">Ver mais sobre o mercado</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TEAM ═══ -->
+<section class="team-section" id="equipe">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">06 — Fundadores</div>
+      <h2>As pessoas por trás da ponte.</h2>
+    </div>
+    <div class="team-grid">
+      <div class="founder-card reveal reveal-delay-1">
+        <div class="founder-avatar">
+          <span class="founder-avatar-initials">HA</span>
+        </div>
+        <div class="founder-body">
+          <div class="founder-name">Hélio Anselmo Filho</div>
+          <div class="founder-role">Co-Founder & CEO</div>
+          <div class="founder-edu">Análise e Desenvolvimento de Sistemas (ADS)</div>
+          <a href="https://www.linkedin.com/in/helio-anselmo-filho/" target="_blank" rel="noopener" class="founder-linkedin">🔗 linkedin.com/in/helio-anselmo-filho</a>
+          <ul class="founder-responsibilities">
+            <li>Idealizador da CodeBridge AI</li>
+            <li>Liderança estratégica e tecnológica</li>
+            <li>Desenvolvimento de soluções e produto</li>
+            <li>Visão de longo prazo</li>
+          </ul>
+        </div>
+      </div>
+      <div class="founder-card reveal reveal-delay-2">
+        <div class="founder-avatar" style="background:linear-gradient(135deg,var(--teal-dark),var(--navy-light))">
+          <span class="founder-avatar-initials">ES</span>
+        </div>
+        <div class="founder-body">
+          <div class="founder-name">Eric Salgado Pereira</div>
+          <div class="founder-role" style="color:var(--azure-lt)">Co-Founder & COO</div>
+          <div class="founder-edu">ADS + Administração de Empresas</div>
+          <a href="https://www.linkedin.com/in/eric-salgado-355861290/" target="_blank" rel="noopener" class="founder-linkedin">🔗 linkedin.com/in/eric-salgado-355861290</a>
+          <ul class="founder-responsibilities">
+            <li>Estruturação operacional</li>
+            <li>Apoio técnico ao produto</li>
+            <li>Planejamento estratégico</li>
+            <li>Gestão de processos e negócios</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="founders.html" class="btn btn-secondary btn-arrow">Conhecer os fundadores</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ROADMAP ═══ -->
+<section class="roadmap-section" id="roadmap">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">07 — Roadmap</div>
+      <h2>De serviço especializado a plataforma global.</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-phase">Q2 2025 — FASE 1</div>
+        <div class="timeline-title">Lançamento de serviços B2C / B2B</div>
+        <p>Serviços ativos, primeiros 20 clientes, comunidade no Discord, presença no LinkedIn. MRR alvo: R$15.000.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">Q4 2025 — FASE 2</div>
+        <div class="timeline-title">Educação e comunidade</div>
+        <p>1º curso online, 50 alunos ativos, newsletter técnica e parcerias locais. MRR alvo: R$80.000.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">Q2 2026 — FASE 3</div>
+        <div class="timeline-title">Escala e expansão LATAM</div>
+        <p>200 alunos/mês, plataforma beta, time de 5 pessoas, expansão para toda a América Latina.</p>
+      </div>
+      <div class="timeline-item" style="padding-bottom:0">
+        <div class="timeline-phase">2027+ — FASE 4</div>
+        <div class="timeline-title">Plataforma SaaS global</div>
+        <p>1.000+ usuários, AI Code Reviewer SaaS, marketplace de templates, API pública, certificações. ARR alvo: R$2M+.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FINAL CTA ═══ -->
+<section class="final-cta">
+  <div class="container">
+    <div class="cta-section reveal">
+      <h2>Vamos construir a ponte juntos.</h2>
+      <p>Seja você um desenvolvedor que quer evoluir, uma startup que precisa de arquitetura sólida ou um investidor que vê o futuro — a CodeBridge AI está pronta.</p>
+      <div class="cta-buttons">
+        <a href="services.html" class="btn btn-primary btn-lg btn-arrow">Ver serviços</a>
+        <a href="contact.html" class="btn btn-secondary btn-lg">Fale conosco</a>
+        <a href="community.html" class="btn btn-ghost btn-lg">Comunidade</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:0.75rem">
+          <div class="nav-logo-mark">
+            <svg width="18" height="18" viewBox="0 0 40 40" fill="none"><path d="M4 28 Q20 8 36 28" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/><line x1="4" y1="28" x2="4" y2="35" stroke="white" stroke-width="3" stroke-linecap="round"/><line x1="36" y1="28" x2="36" y2="35" stroke="white" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="9" r="3.5" fill="#2EC4B6"/></svg>
+          </div>
+          <span class="nav-logo-text" style="font-size:0.95rem">CodeBridge AI</span>
+        </a>
+        <p>A ponte entre IA e engenharia de software de qualidade. Transformamos código gerado por IA em soluções profissionais.</p>
+        <div style="display:flex;gap:0.75rem;margin-top:0.5rem">
+          <a href="https://www.linkedin.com/company/codebridge-ai" target="_blank" class="btn btn-ghost btn-sm">LinkedIn</a>
+          <a href="https://github.com/codebridge-ai" target="_blank" class="btn btn-ghost btn-sm">GitHub</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="about.html">Sobre nós</a></li>
+          <li><a href="founders.html">Fundadores</a></li>
+          <li><a href="services.html">Serviços</a></li>
+          <li><a href="contact.html">Contato</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Recursos</h4>
+        <ul>
+          <li><a href="brand-center.html">Brand Center</a></li>
+          <li><a href="idea-hub.html">Idea Hub</a></li>
+          <li><a href="blog.html">Blog técnico</a></li>
+          <li><a href="resources.html">Recursos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Comunidade</h4>
+        <ul>
+          <li><a href="community.html">Comunidade</a></li>
+          <li><a href="blog.html">Newsletter</a></li>
+          <li><a href="resources.html">Templates</a></li>
+          <li><a href="contact.html">Mentoria</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 CodeBridge AI. Todos os direitos reservados.</span>
+      <span style="font-family:var(--font-mono);color:var(--teal)">Da IA ao software de verdade.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button id="back-to-top" aria-label="Voltar ao topo">↑</button>
+
+<script src="assets/js/main.js" defer></script>
+<script src="assets/js/navigation.js" defer></script>
+<script src="assets/js/animations.js" defer></script>
+</body>
+</html>

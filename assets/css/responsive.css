@@ -1,0 +1,47 @@
+/* ================================================================
+   CodeBridge AI — Responsive
+   ================================================================ */
+
+@media (max-width: 1024px) {
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .steps-grid { grid-template-columns: repeat(2, 1fr); }
+  .step-col::after { display: none; }
+}
+
+@media (max-width: 768px) {
+  :root { --nav-h: 64px; }
+  .container { padding: 0 1.25rem; }
+  .nav-links { display: none; }
+  .nav-cta   { display: none; }
+  .nav-hamburger { display: flex; }
+  h1 { font-size: 2.1rem; }
+  h2 { font-size: 1.6rem; }
+  .services-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .founders-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .cta-section { padding: 2.5rem 1.5rem; }
+  .cta-buttons { flex-direction: column; align-items: center; }
+  .page-hero { padding: calc(var(--nav-h) + 3rem) 0 2.5rem; }
+  /* two-col grids become 1 col */
+  [style*="grid-template-columns: 1fr 1fr"],
+  [style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns: repeat(3"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns: repeat(4"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .btn-lg { width: 100%; justify-content: center; }
+  #back-to-top { bottom: 1.25rem; right: 1.25rem; }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 1.8rem; }
+  .btn { width: 100%; justify-content: center; }
+  .tag { font-size: 0.7rem; padding: 0.2rem 0.6rem; }
+}

@@ -1,0 +1,60 @@
+/* ================================================================
+   CodeBridge AI — Design Tokens
+   ================================================================ */
+
+:root {
+  /* ── Colors ── */
+  --bg:           #07111E;
+  --bg-1:         #0C1929;
+  --bg-2:         #102236;
+  --bg-3:         #142B42;
+  --navy:         #1A3557;
+  --navy-light:   #2563A8;
+  --azure:        #2563A8;
+  --azure-lt:     #3B82F6;
+  --teal-dark:    #0F766E;
+  --teal-mid:     #14B8A8;
+  --teal:         #2EC4B6;
+  --white:        #FFFFFF;
+  --text-primary: #F0F6FF;
+  --text-secondary:#94A8C0;
+  --text-muted:   #546E8A;
+  --border:       rgba(255,255,255,0.07);
+  --border-teal:  rgba(46,196,182,0.25);
+  --border-azure: rgba(59,130,246,0.25);
+
+  /* ── Gradients ── */
+  --grad-brand:   linear-gradient(135deg, #1A3557 0%, #2563A8 50%, #0F766E 100%);
+  --grad-brand-h: linear-gradient(90deg,  #1A3557 0%, #2563A8 50%, #0F766E 100%);
+  --grad-teal:    linear-gradient(135deg, #0F766E 0%, #2EC4B6 100%);
+  --grad-azure:   linear-gradient(135deg, #2563A8 0%, #3B82F6 100%);
+
+  /* ── Typography ── */
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+
+  /* ── Spacing ── */
+  --sp-xs:  0.5rem;
+  --sp-sm:  1rem;
+  --sp-md:  1.5rem;
+  --sp-lg:  2rem;
+  --sp-xl:  5rem;
+  --sp-2xl: 8rem;
+
+  /* ── Radius ── */
+  --r-sm:   6px;
+  --r-md:   10px;
+  --r-lg:   16px;
+  --r-xl:   24px;
+  --r-2xl:  32px;
+
+  /* ── Nav ── */
+  --nav-h:  72px;
+
+  /* ── Transitions ── */
+  --ease:     cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --dur:      200ms;
+  --dur-slow: 350ms;
+}
